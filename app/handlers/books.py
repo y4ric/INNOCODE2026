@@ -2,12 +2,13 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.book import BookCreate, BookResponse, BookUpdate
+from app.schemas.book import ProfileCreate, ProfileResponse, BookUpdate
 from app.services.book_service import BookService
 
+
 router = APIRouter(
-    prefix="/books",
-    tags=["books"],
+    prefix="/profile",
+    tags=["profile"],
 )
 
 def get_book_service(
@@ -16,17 +17,16 @@ def get_book_service(
     return BookService(db)
 @router.post(
     "/",
-    response_model=BookResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def create_book(
-    schema: BookCreate,
+def create_profile(
+    schema: ProfileCreate,
     service: BookService = Depends(get_book_service),
 ):
-    return service.create_book(schema)
+    return service.create_profile(schema)
 @router.get(
     "/",
-    response_model=list[BookResponse],
+    response_model=list[ProfileResponse],
 )
 def get_books(
     service: BookService = Depends(get_book_service),
@@ -34,7 +34,7 @@ def get_books(
     return service.get_books()
 @router.get(
     "/{book_id}",
-    response_model=BookResponse,
+
 )
 def get_book(
     book_id: int,
@@ -43,7 +43,7 @@ def get_book(
     return service.get_book(book_id)
 @router.patch(
     "/{book_id}",
-    response_model=BookResponse,
+    response_model=ProfileResponse,
 )
 def update_book(
     book_id: int,

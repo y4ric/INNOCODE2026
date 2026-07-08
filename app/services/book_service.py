@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 
 from app.models.book import Book
 from app.repositories.book_repository import BookRepository
-from app.schemas.book import BookCreate, BookUpdate
+from app.schemas.book import ProfileCreate, BookUpdate
+from app.models.book import Profile
 
 
 class BookService:
@@ -11,14 +12,14 @@ class BookService:
     def __init__(self, db: Session):
         self.repository = BookRepository(db)
 
-    def create_book(self, schema: BookCreate) -> Book:
-        book = Book(
-            id = schema.id,
-            title=schema.title,
-            author=schema.author,
+    def create_profile(self, schema: ProfileCreate) -> Profile:
+        new_profile = Profile(
+            user_id = schema.user_id,
+            name=schema.name,
+            profile_pic=schema.profile_pic,
         )
 
-        return self.repository.create(book)
+        return self.repository.create(new_profile)
 
     def get_books(self) -> list[Book]:
         return self.repository.get_all()

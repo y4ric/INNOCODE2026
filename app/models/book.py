@@ -12,3 +12,11 @@ class Book(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
 
     author: Mapped[str] = mapped_column(String, nullable=False)
+class Profile(Base):
+    __tablename__ = "profiles"
+
+    user_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+
+    name: Mapped[str] = mapped_column(String, nullable=False)
+
+    profile_pic : Mapped[str] = mapped_column(String, nullable=False)

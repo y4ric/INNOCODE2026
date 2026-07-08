@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.models.book import Book
-
+from app.models.book import Profile
 
 class BookRepository:
 
@@ -26,13 +26,11 @@ class BookRepository:
 
     def get_by_id(
         self,
-        book_id: int,
-    ) -> Book | None:
+        users_id: int,
+    ) -> Profile | None:
 
         return (
-            self.db.query(Book)
-            .filter(Book.id == book_id)
-            .first()
+            self.db.query(Profile).filter(Profile.user_id == users_id).first()
         )
 
     def delete(self, book: Book) -> None:
