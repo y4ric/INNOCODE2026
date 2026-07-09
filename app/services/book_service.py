@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 
 from app.models.book import Book
 from app.repositories.book_repository import BookRepository
-from app.schemas.book import ProfileCreate, BookUpdate
-from app.models.book import Profile
+from app.schemas.book import  BookUpdate
+from app.schemas.book import CarCreate
+from app.models.book import Cars
 
 
 class BookService:
@@ -12,14 +13,18 @@ class BookService:
     def __init__(self, db: Session):
         self.repository = BookRepository(db)
 
-    def create_profile(self, schema: ProfileCreate) -> Profile:
-        new_profile = Profile(
-            user_id = schema.user_id,
-            name=schema.name,
-            profile_pic=schema.profile_pic,
-        )
 
-        return self.repository.create(new_profile)
+
+
+
+    def create_car(self, schema: CarCreate) -> Cars:
+        new_car = Cars(
+            car_id = schema.car_id,
+            name = schema.name,
+            category = schema.category
+        )
+        return self.repository.create(new_car)
+
 
     def get_books(self) -> list[Book]:
         return self.repository.get_all()

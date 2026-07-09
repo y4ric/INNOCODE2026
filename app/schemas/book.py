@@ -1,10 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class ProfileCreate(BaseModel):
-    user_id : int = Field()
-    name: str = Field(min_length=1, max_length=200)
-    profile_pic: str = Field(min_length=1, max_length=200)
+
 
 
 class BookUpdate(BaseModel):
@@ -18,3 +15,13 @@ class ProfileResponse(BaseModel):
     id: int
     name: str
     profile_pic: str
+
+class CarCreate(BaseModel):
+    car_id: int = Field()
+    name: str = Field(default=None, min_length=1, max_length=200)
+    category: str = Field(default=None, min_length=1, max_length=200)
+class CarResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    car_id: int
+    name: str
+    category_car: str

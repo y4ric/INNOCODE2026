@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.book import ProfileCreate, ProfileResponse, BookUpdate
+from app.schemas.book import  ProfileResponse, BookUpdate, CarCreate
 from app.services.book_service import BookService
 
 
@@ -10,7 +10,10 @@ router = APIRouter(
     prefix="/profile",
     tags=["profile"],
 )
-
+car = APIRouter(
+    prefix="/car",
+    tags=["car"],
+)
 def get_book_service(
     db: Session = Depends(get_db),
 ) -> BookService:
@@ -19,11 +22,16 @@ def get_book_service(
     "/",
     status_code=status.HTTP_201_CREATED,
 )
-def create_profile(
-    schema: ProfileCreate,
+
+@car.post(
+    "/cars",
+    status_code=status.HTTP_201_CREATED,
+)
+def create_car(
+    schema: CarCreate,
     service: BookService = Depends(get_book_service),
 ):
-    return service.create_profile(schema)
+    return service.create_car(schema)
 @router.get(
     "/",
     response_model=list[ProfileResponse],
