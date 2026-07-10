@@ -26,19 +26,19 @@ class BookService:
         return self.repository.create(new_car)
 
 
-    def get_books(self) -> list[Book]:
+    def get_books(self) -> list[Cars]:
         return self.repository.get_all()
 
-    def get_book(self, book_id: int) -> Book:
-        book = self.repository.get_by_id(book_id)
+    def get_car(self, car_id: int) -> Cars:
+        car = self.repository.get_by_id(car_id)
 
-        if book is None:
+        if car is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Book not found",
+                detail="Car not found",
             )
 
-        return book
+        return car
 
     def update_book(
             self,

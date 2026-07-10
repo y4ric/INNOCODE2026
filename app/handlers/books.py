@@ -7,24 +7,18 @@ from app.services.book_service import BookService
 
 
 router = APIRouter(
-    prefix="/profile",
-    tags=["profile"],
-)
-car = APIRouter(
-    prefix="/car",
+    prefix="/cars",
     tags=["car"],
 )
+
 def get_book_service(
     db: Session = Depends(get_db),
 ) -> BookService:
     return BookService(db)
+
+
 @router.post(
     "/",
-    status_code=status.HTTP_201_CREATED,
-)
-
-@car.post(
-    "/cars",
     status_code=status.HTTP_201_CREATED,
 )
 def create_car(
