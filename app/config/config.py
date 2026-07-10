@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pydantic_settings import BaseSettings,SettingsConfigDict
 class Settings(BaseSettings):
-    app_name: str = "FullStack API"
+    app_name: str = "Car_shop"
     app_version: str = "0.1.0"
     debug: bool = True
     host: str = "127.0.0.1"
