@@ -26,7 +26,7 @@ class BookService:
         return self.repository.create(new_car)
 
 
-    def get_books(self) -> list[Cars]:
+    def get_cars(self) -> list[Cars]:
         return self.repository.get_all()
 
     def get_car(self, car_id: int) -> Cars:
@@ -39,6 +39,7 @@ class BookService:
             )
 
         return car
+
 
     def update_book(
             self,

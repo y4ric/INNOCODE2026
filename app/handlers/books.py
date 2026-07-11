@@ -30,19 +30,19 @@ def create_car(
     "/",
     response_model=list[ProfileResponse],
 )
-def get_books(
+def get_cars(
     service: BookService = Depends(get_book_service),
 ):
-    return service.get_books()
+    return service.get_cars()
 @router.get(
     "/{book_id}",
 
 )
 def get_book(
-    book_id: int,
+    car_id: int,
     service: BookService = Depends(get_book_service),
 ):
-    return service.get_book(book_id)
+    return service.get_car(car_id)
 @router.patch(
     "/{book_id}",
     response_model=ProfileResponse,

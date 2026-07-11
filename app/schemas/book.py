@@ -25,3 +25,8 @@ class CarResponse(BaseModel):
     car_id: int
     name: str
     category_car: str
+class AddFavouriteCar(BaseModel):
+    car_id: int = Field()
+class FavouriteCarResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    car_id: int

@@ -22,3 +22,7 @@ class Cars(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
 
     category: Mapped[str] = mapped_column(String, nullable=False)
+class Favorites(Base):
+    __tablename__ = "favorites"
+
+    car_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
