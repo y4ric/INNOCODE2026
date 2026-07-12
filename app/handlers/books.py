@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.book import  ProfileResponse, BookUpdate, CarCreate
+from app.schemas.book import ProfileResponse, BookUpdate, CarCreate, CarResponse
 from app.services.book_service import BookService
 
 
@@ -28,7 +28,7 @@ def create_car(
     return service.create_car(schema)
 @router.get(
     "/",
-    response_model=list[ProfileResponse],
+    response_model=list[CarResponse],
 )
 def get_cars(
     service: BookService = Depends(get_book_service),
@@ -45,7 +45,7 @@ def get_book(
     return service.get_car(car_id)
 @router.patch(
     "/{book_id}",
-    response_model=ProfileResponse,
+    response_model=CarResponse
 )
 def update_book(
     book_id: int,

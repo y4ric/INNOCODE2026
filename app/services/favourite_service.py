@@ -18,4 +18,6 @@ class FavouriteService:
         favourite_car = Cars(
             car_id=car_id
         )
-        return self.repository.create(favourite_car)
+        self.repository.add(favourite_car)
+        return {"status": "success", "message": "Ваша машина успешно добавлена в избранное"}
+
