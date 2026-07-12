@@ -30,7 +30,7 @@ def require_login() -> None:
 
     st.warning("Сначала войдите в аккаунт.")
     if st.button("Перейти ко входу", key="require_login_button"):
-        st.switch_page("pages/login.py")
+        st.switch_page("views/login.py")
     st.stop()
 
 

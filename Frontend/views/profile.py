@@ -27,4 +27,4 @@ st.write(f"**Роль:** {profile.get('role', 'user')}")
 
 if st.button("Выйти", type="primary"):
     clear_auth()
-    st.switch_page("pages/login.py")
+    st.switch_page("views/login.py")

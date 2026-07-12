@@ -1,8 +1,8 @@
 import requests
 import streamlit as st
 
-from api.client import create_item, get_error_message
-from auth import require_admin
+from api.client import create_car, get_error_message
+from auth.state import require_admin
 
 
 require_admin()
@@ -28,7 +28,7 @@ if submitted:
     }
 
     try:
-        response = create_item(payload)
+        response = create_car(payload)
     except requests.RequestException:
         st.error("Не удалось выполнить запрос к backend.")
         st.stop()
@@ -36,6 +36,6 @@ if submitted:
     if response.status_code in (200, 201):
         created_item = response.json()
         st.session_state["selected_item_id"] = created_item["id"]
-        st.switch_page("pages/details.py")
+        st.switch_page("views/details.py")
     else:
         st.error(get_error_message(response))

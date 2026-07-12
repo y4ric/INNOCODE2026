@@ -3,11 +3,11 @@ import streamlit as st
 
 from api.client import (
     add_favorite,
-    delete_item,
+    delete_car,
     get_error_message,
     remove_favorite,
 )
-from Frontend.auth.state import is_admin, is_authenticated
+from auth.state import is_admin, is_authenticated
 
 
 def render_favorite_button(item: dict, key_prefix: str) -> None:
@@ -46,7 +46,7 @@ def render_admin_actions(item_id: int, key_prefix: str) -> None:
         key=f"{key_prefix}_edit_{item_id}",
     ):
         st.session_state["edit_item_id"] = item_id
-        st.switch_page("pages/edit_item.py")
+        st.switch_page("views/edit_car.py")
 
     if delete_column.button(
         "Удалить",
@@ -54,19 +54,19 @@ def render_admin_actions(item_id: int, key_prefix: str) -> None:
         type="primary",
     ):
         try:
-            response = delete_item(item_id)
+            response = delete_car(item_id)
         except requests.RequestException:
             st.error("Не удалось выполнить запрос к backend.")
             return
 
         if response.ok:
             st.success("Запись удалена.")
-            st.switch_page("pages/catalog.py")
+            st.switch_page("views/catalog.py")
         else:
             st.error(get_error_message(response))
 
 
-def render_item_card(item: dict) -> None:
+def render_item_cards(item: dict) -> None:
     item_id = item["id"]
 
     with st.container(border=True):
@@ -82,6 +82,6 @@ def render_item_card(item: dict) -> None:
 
         if st.button("Подробнее", key=f"card_details_{item_id}"):
             st.session_state["selected_item_id"] = item_id
-            st.switch_page("pages/details.py")
+            st.switch_page("views/details.py")
 
         render_admin_actions(item_id, key_prefix="card")

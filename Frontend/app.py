@@ -9,17 +9,17 @@ st.set_page_config(
     layout="wide",
 )
 
-pages = {
+views = {
     "Каталог": [
         st.Page(
-            "pages/catalog.py",
+            "Frontend/views/catalog.py",
             title="Каталог",
             icon=":material/store:",
             url_path="catalog",
             default=True,
         ),
         st.Page(
-            "pages/details.py",
+            "Frontend/views/details.py",
             title="Подробнее",
             icon=":material/article:",
             url_path="details",
@@ -27,13 +27,13 @@ pages = {
     ],
     "Пользователь": [
         st.Page(
-            "pages/favorites.py",
+            "Frontend/views/favorites.py",
             title="Избранное",
             icon=":material/favorite:",
             url_path="favorites",
         ),
         st.Page(
-            "pages/profile.py",
+            "Frontend/views/profile.py",
             title="Профиль",
             icon=":material/person:",
             url_path="profile",
@@ -41,13 +41,13 @@ pages = {
     ],
     "Авторизация": [
         st.Page(
-            "pages/login.py",
+            "Frontend/views/login.py",
             title="Вход",
             icon=":material/login:",
             url_path="login",
         ),
         st.Page(
-            "pages/registration.py",
+            "Frontend/views/registration.py",
             title="Регистрация",
             icon=":material/person_add:",
             url_path="registration",
@@ -58,13 +58,13 @@ pages = {
 if is_admin():
     pages["Администратор"] = [
         st.Page(
-            "pages/create_item.py",
+            "Frontend/views/create_car.py",
             title="Создать запись",
             icon=":material/add:",
             url_path="create-item",
         ),
         st.Page(
-            "pages/edit_item.py",
+            "Frontend/views/edit_car.py",
             title="Редактировать запись",
             icon=":material/edit:",
             url_path="edit-item",

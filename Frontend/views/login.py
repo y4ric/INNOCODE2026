@@ -9,7 +9,7 @@ st.header("Вход")
 
 if is_authenticated():
     st.info("Вы уже вошли в аккаунт.")
-    st.page_link("pages/profile.py", label="Открыть профиль")
+    st.page_link("views/profile.py", label="Открыть профиль")
     st.stop()
 
 with st.form("login_form"):
@@ -60,6 +60,6 @@ if submitted:
 
     save_auth(access_token, profile_response.json())
     st.success("Вход выполнен.")
-    st.switch_page("pages/catalog.py")
+    st.switch_page("views/catalog.py")
 
-st.page_link("pages/registration.py", label="Нет аккаунта? Зарегистрироваться")
+st.page_link("views/registration.py", label="Нет аккаунта? Зарегистрироваться")

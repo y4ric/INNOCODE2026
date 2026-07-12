@@ -33,8 +33,8 @@ if submitted:
 
     if response.status_code in (200, 201):
         st.success("Регистрация выполнена. Теперь войдите в аккаунт.")
-        st.switch_page("pages/login.py")
+        st.switch_page("views/login.py")
     else:
         st.error(get_error_message(response))
 
-st.page_link("pages/login.py", label="Уже есть аккаунт? Войти")
+st.page_link("views/login.py", label="Уже есть аккаунт? Войти")

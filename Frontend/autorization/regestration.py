@@ -18,4 +18,4 @@ with st.form("registration_form", border=True):
 
     submitted = st.form_submit_button("Регистрация")
     if submitted:
-        st.switch_page("pages/app.py")
+        st.switch_page("views/app.py")

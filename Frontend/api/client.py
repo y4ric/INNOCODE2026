@@ -8,7 +8,7 @@ BACKEND_URL = "http://127.0.0.1:8000"
 LOGIN_ENDPOINT = f"{BACKEND_URL}/auth/login/"
 REGISTER_ENDPOINT = f"{BACKEND_URL}/auth/register/"
 PROFILE_ENDPOINT = f"{BACKEND_URL}/users/me/"
-ITEMS_ENDPOINT = f"{BACKEND_URL}/items/"
+CARS_ENDPOINT = f"{BACKEND_URL}/cars/"
 FAVORITES_ENDPOINT = f"{BACKEND_URL}/favorites/"
 
 
@@ -70,15 +70,15 @@ def get_profile() -> requests.Response:
     return request_with_authorization_header("GET", PROFILE_ENDPOINT)
 
 
-def get_items() -> requests.Response:
+def get_cars() -> requests.Response:
     # Авторизованному пользователю backend вернёт его is_favorite.
     if session_state.get("access_token"):
-        return request_with_authorization_header("GET", ITEMS_ENDPOINT)
-    return requests.get(ITEMS_ENDPOINT)
+        return request_with_authorization_header("GET", CARS_ENDPOINT)
+    return requests.get(CARS_ENDPOINT)
 
 
-def get_item(item_id: int) -> requests.Response:
-    endpoint = f"{ITEMS_ENDPOINT}{item_id}/"
+def get_car(item_id: int) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{item_id}/"
 
     if session_state.get("access_token"):
         return request_with_authorization_header("GET", endpoint)
@@ -99,16 +99,16 @@ def remove_favorite(item_id: int) -> requests.Response:
     return request_with_authorization_header("DELETE", endpoint)
 
 
-def create_item(payload: dict) -> requests.Response:
+def create_car(payload: dict) -> requests.Response:
     return request_with_authorization_header(
         "POST",
-        ITEMS_ENDPOINT,
+        CARS_ENDPOINT,
         payload=payload,
     )
 
 
-def update_item(item_id: int, payload: dict) -> requests.Response:
-    endpoint = f"{ITEMS_ENDPOINT}{item_id}/"
+def update_car(item_id: int, payload: dict) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{item_id}/"
     return request_with_authorization_header(
         "PATCH",
         endpoint,
@@ -116,6 +116,6 @@ def update_item(item_id: int, payload: dict) -> requests.Response:
     )
 
 
-def delete_item(item_id: int) -> requests.Response:
-    endpoint = f"{ITEMS_ENDPOINT}{item_id}/"
+def delete_car(item_id: int) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{item_id}/"
     return request_with_authorization_header("DELETE", endpoint)

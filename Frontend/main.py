@@ -16,7 +16,7 @@ st.subheader("Пароль")
 psw = st.text_input("Пароль", value=session_state["psw"], placeholder="Введите пароль...")
 
 if st.button("Другая страница"):
-    st.switch_page("pages/another.py")
+    st.switch_page("Frontend/views/another.py")
 
 st.text(f"Ваш пароль: {psw}")
 st.text(f"Ваше Имя: {login}")

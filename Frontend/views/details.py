@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from api.client import get_error_message, get_item
+from api.client import get_error_message, get_car
 from components.item_card import render_admin_actions, render_favorite_button
 
 
@@ -9,11 +9,11 @@ item_id = st.session_state.get("selected_item_id")
 
 if item_id is None:
     st.info("Сначала выберите запись в каталоге.")
-    st.page_link("pages/catalog.py", label="Перейти в каталог")
+    st.page_link("views/catalog.py", label="Перейти в каталог")
     st.stop()
 
 try:
-    response = get_item(item_id)
+    response = get_car(item_id)
 except requests.RequestException:
     st.error("Не удалось выполнить запрос к backend.")
     st.stop()

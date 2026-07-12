@@ -15,4 +15,4 @@ with st.form("login_form", border=True):
 
     submitted = st.form_submit_button("Войти")
     if submitted:
-        st.switch_page("pages/app.py")
+        st.switch_page("views/app.py")

@@ -3,7 +3,7 @@ import streamlit as st
 
 from api.client import get_error_message, get_favorites
 from auth import require_login
-from components.item_card import render_item_card
+from components.item_card import render_item_cards
 
 
 require_login()
@@ -26,4 +26,4 @@ if not items:
     st.stop()
 
 for item in items:
-    render_item_card(item)
+    render_item_cards(item)

@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from api.client import get_error_message, get_item, update_item
+from api.client import get_error_message, get_car, update_car
 from auth import require_admin
 
 
@@ -15,7 +15,7 @@ if item_id is None:
     st.stop()
 
 try:
-    item_response = get_item(item_id)
+    item_response = get_car(item_id)
 except requests.RequestException:
     st.error("Не удалось получить запись с backend.")
     st.stop()
@@ -55,13 +55,13 @@ if submitted:
     }
 
     try:
-        response = update_item(item_id, payload)
+        response = update_car(item_id, payload)
     except requests.RequestException:
         st.error("Не удалось выполнить запрос к backend.")
         st.stop()
 
     if response.ok:
         st.session_state["selected_item_id"] = item_id
-        st.switch_page("pages/details.py")
+        st.switch_page("views/details.py")
     else:
         st.error(get_error_message(response))
