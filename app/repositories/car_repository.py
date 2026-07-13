@@ -17,7 +17,19 @@ class CarRepository:
         return (
             self.db.query(Cars).filter(Cars.car_id == car_id).first()
         )
-    def create(self, car: Cars) -> Cars:
-        new_car = Cars(car_id=car.id)
+
+    def create(self, car) -> Cars:
+        new_car = Cars(
+            name=car.name,
+            short_description=car.short_description,
+            full_description=car.full_description,
+            url_picture=car.url_picture
+        )
+
         self.db.add(new_car)
-    
+        self.db.commit()
+        self.db.refresh(new_car)
+        return new_car
+
+
+

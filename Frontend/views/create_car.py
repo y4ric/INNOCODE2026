@@ -21,10 +21,10 @@ if submitted:
         st.stop()
 
     payload = {
-        "title": title.strip(),
+        "name": title.strip(),
         "short_description": short_description.strip(),
-        "description": description.strip(),
-        "image_url": image_url.strip() or None,
+        "full_description": description.strip(),
+        "url_picture": image_url.strip() or None,
     }
 
     try:

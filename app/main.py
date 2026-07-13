@@ -23,6 +23,7 @@ app.include_router(users_router)
 app.include_router(favourite_router)
 
 
+
 @app.get("/")
 def read_root() -> dict[str, str]:
     return {"message": f"{settings.app_name} is running"}
