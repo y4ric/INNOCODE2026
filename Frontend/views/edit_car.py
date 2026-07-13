@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 from api.client import get_error_message, get_car, update_car
-from auth import require_admin
+from auth.state import require_admin
 
 
 require_admin()

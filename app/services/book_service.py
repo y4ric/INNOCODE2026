@@ -1,11 +1,11 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.models.book import Book
-from app.repositories.book_repository import BookRepository
-from app.schemas.book import  BookUpdate
-from app.schemas.book import CarCreate
-from app.models.book import Cars
+from models.book import Book
+from repositories.book_repository import BookRepository
+from schemas.book import  BookUpdate
+from schemas.book import CarCreate
+from models.book import Cars
 
 
 class BookService:
@@ -19,9 +19,10 @@ class BookService:
 
     def create_car(self, schema: CarCreate) -> Cars:
         new_car = Cars(
-            car_id = schema.car_id,
             name = schema.name,
-            category = schema.category
+            short_description = schema.short_description,
+            full_description = schema.full_description,
+            url_picture = schema.url_picture,
         )
         return self.repository.create(new_car)
 
@@ -43,11 +44,11 @@ class BookService:
 
     def update_book(
             self,
-            book_id: int,
+            car_id: int,
             schema: BookUpdate,
     ) -> Book:
 
-        book = self.get_book(book_id)
+        book = self.get_car(car_id)
 
         if schema.title is None and schema.author is None:
             raise HTTPException(

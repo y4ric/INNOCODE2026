@@ -1,11 +1,18 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.auth import get_current_user, require_role
-from app.database import get_db
-from app.models.user import User, UserRole
-from app.schemas.user import UserResponse
-from app.services.user_service import UserService
+import sys
+from pathlib import Path
+
+frontend_root = str(Path(__file__).resolve().parent.parent)
+if frontend_root not in sys.path:
+    sys.path.append(frontend_root)
+
+
+from database import get_db
+from models.user import User, UserRole
+from schemas.user import UserResponse
+from services.user_service import UserService
 
 router = APIRouter(tags=["users"])
 

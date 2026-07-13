@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
-
-from app.models.book import Book, Cars
+from models.book import Cars , Book
 
 
 class BookRepository:

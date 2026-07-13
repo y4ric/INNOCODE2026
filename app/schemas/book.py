@@ -17,14 +17,16 @@ class ProfileResponse(BaseModel):
     profile_pic: str
 
 class CarCreate(BaseModel):
-    car_id: int = Field()
     name: str = Field(default=None, min_length=1, max_length=200)
-    category: str = Field(default=None, min_length=1, max_length=200)
+    short_description: str = Field(default=None, min_length=1, max_length=200)
+    full_description: str = Field(default=None, min_length=1, max_length=200)
+    url_picture: str = Field(default=None, min_length=1, max_length=200)
 class CarResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    car_id: int
     name: str
-    category_car: str
+    short_description: str
+    full_description: str
+    url_picture: str
 class AddFavouriteCar(BaseModel):
     car_id: int = Field()
 class FavouriteCarResponse(BaseModel):

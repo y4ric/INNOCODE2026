@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from app.database import get_db
-from app.schemas.book import ProfileResponse, BookUpdate, CarCreate, CarResponse
-from app.services.book_service import BookService
+from database import get_db
+from schemas.book import ProfileResponse, BookUpdate, CarCreate, CarResponse
+from services.book_service import BookService
 
 
 router = APIRouter(

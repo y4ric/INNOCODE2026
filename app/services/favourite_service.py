@@ -1,11 +1,11 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.models.book import Book
-from app.repositories.book_repository import BookRepository
-from app.schemas.book import  BookUpdate
-from app.schemas.book import CarCreate
-from app.models.book import Cars
+from models.book import Book
+from repositories.book_repository import BookRepository
+from schemas.book import  BookUpdate
+from schemas.book import CarCreate
+from models.book import Cars
 
 
 

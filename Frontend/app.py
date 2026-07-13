@@ -7,7 +7,6 @@ st.set_page_config(
     page_title="Каталог",
     page_icon="📚",
     layout="wide",
-    initial_sidebar_state="expanded",
 )
 
 views = {
@@ -72,5 +71,5 @@ if is_admin():
         ),
     ]
 
-navigation = st.navigation(views)
-navigation.run()
+nav = st.navigation(views , expanded=True , position="sidebar")
+nav.run()

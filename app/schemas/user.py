@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from app.models.user import UserRole
+from models.user import UserRole
 
 
 class UserCreate(BaseModel):
