@@ -77,8 +77,8 @@ def get_cars() -> requests.Response:
     return requests.get(CARS_ENDPOINT)
 
 
-def get_car(item_id: int) -> requests.Response:
-    endpoint = f"{CARS_ENDPOINT}{item_id}/"
+def get_car(car_id: int) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{car_id}"
 
     if session_state.get("access_token"):
         return request_with_authorization_header("GET", endpoint)
@@ -89,13 +89,13 @@ def get_favorites() -> requests.Response:
     return request_with_authorization_header("GET", FAVORITES_ENDPOINT)
 
 
-def add_favorite(item_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}{item_id}/"
+def add_favorite(car_id: int) -> requests.Response:
+    endpoint = f"{FAVORITES_ENDPOINT}{car_id}/"
     return request_with_authorization_header("POST", endpoint)
 
 
-def remove_favorite(item_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}{item_id}/"
+def remove_favorite(car_id: int) -> requests.Response:
+    endpoint = f"{FAVORITES_ENDPOINT}{car_id}/"
     return request_with_authorization_header("DELETE", endpoint)
 
 
@@ -107,8 +107,8 @@ def create_car(payload: dict) -> requests.Response:
     )
 
 
-def update_car(item_id: int, payload: dict) -> requests.Response:
-    endpoint = f"{CARS_ENDPOINT}{item_id}/"
+def update_car(car_id: int, payload: dict) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{car_id}/"
     return request_with_authorization_header(
         "PATCH",
         endpoint,
@@ -116,6 +116,6 @@ def update_car(item_id: int, payload: dict) -> requests.Response:
     )
 
 
-def delete_car(item_id: int) -> requests.Response:
-    endpoint = f"{CARS_ENDPOINT}{item_id}/"
+def delete_car(car_id: int) -> requests.Response:
+    endpoint = f"{CARS_ENDPOINT}{car_id}/"
     return request_with_authorization_header("DELETE", endpoint)

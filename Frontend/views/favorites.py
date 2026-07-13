@@ -19,11 +19,7 @@ if not response.ok:
     st.error(get_error_message(response))
     st.stop()
 
-items = response.json()
-
-if not items:
-    st.info("В избранном пока ничего нет.")
-    st.stop()
+items = response.json()     
 
 for item in items:
     render_item_cards(item)

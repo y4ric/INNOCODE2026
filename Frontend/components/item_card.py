@@ -15,16 +15,16 @@ def render_favorite_button(item: dict, key_prefix: str) -> None:
         st.caption("Войдите, чтобы добавить запись в избранное.")
         return
 
-    item_id = item["id"]
+    car_id = item["car_id"]
     is_favorite = item.get("is_favorite", False)
     button_text = "Убрать из избранного" if is_favorite else "В избранное"
 
-    if st.button(button_text, key=f"{key_prefix}_favorite_{item_id}"):
+    if st.button(button_text, key=f"{key_prefix}_favorite_{car_id}"):
         try:
             if is_favorite:
-                response = remove_favorite(item_id)
+                response = remove_favorite(car_id)
             else:
-                response = add_favorite(item_id)
+                response = add_favorite(car_id)
         except requests.RequestException:
             st.error("Не удалось выполнить запрос к backend.")
             return
@@ -35,7 +35,7 @@ def render_favorite_button(item: dict, key_prefix: str) -> None:
             st.error(get_error_message(response))
 
 
-def render_admin_actions(item_id: int, key_prefix: str) -> None:
+def render_admin_actions(car_id: int, key_prefix: str) -> None:
     if not is_admin():
         return
 
@@ -43,18 +43,18 @@ def render_admin_actions(item_id: int, key_prefix: str) -> None:
 
     if edit_column.button(
         "Редактировать",
-        key=f"{key_prefix}_edit_{item_id}",
+        key=f"{key_prefix}_edit_{car_id}",
     ):
-        st.session_state["edit_item_id"] = item_id
+        st.session_state["edit_car_id"] = car_id
         st.switch_page("views/edit_car.py")
 
     if delete_column.button(
         "Удалить",
-        key=f"{key_prefix}_delete_{item_id}",
+        key=f"{key_prefix}_delete_{car_id}",
         type="primary",
     ):
         try:
-            response = delete_car(item_id)
+            response = delete_car(car_id)
         except requests.RequestException:
             st.error("Не удалось выполнить запрос к backend.")
             return
@@ -67,21 +67,25 @@ def render_admin_actions(item_id: int, key_prefix: str) -> None:
 
 
 def render_item_cards(item: dict) -> None:
-    item_id = item["id"]
+    car_id = item["car_id"]
 
     with st.container(border=True):
-        if item.get("image_url"):
-            st.image(item["image_url"], use_container_width=True)
+
+        if item.get("url_picture"):
+            try:
+                st.image(item["url_picture"], use_container_width=True)
+            except Exception:
+                st.warning("Не удалось загрузить изображение (некорректная ссылка)")
         else:
             st.info("Изображение не добавлено")
 
-        st.subheader(item["title"])
+        st.subheader(item["name"])
         st.write(item.get("short_description", ""))
 
         render_favorite_button(item, key_prefix="card")
 
-        if st.button("Подробнее", key=f"card_details_{item_id}"):
-            st.session_state["selected_item_id"] = item_id
+        if st.button("Подробнее", key=f"card_details_{car_id}"):
+            st.session_state["selected_car_id"] = car_id
             st.switch_page("views/details.py")
 
-        render_admin_actions(item_id, key_prefix="card")
+        render_admin_actions(car_id, key_prefix="card")

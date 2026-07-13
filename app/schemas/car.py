@@ -19,11 +19,15 @@ class CarCreate(BaseModel):
     full_description: str = Field(default=None, min_length=1, max_length=200)
     url_picture: str = Field(default=None, min_length=1, max_length=200)
 class CarResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    car_id: int
     name: str
-    short_description: str
-    full_description: str
-    url_picture: str
+    short_description: str | None = None
+    full_description: str | None = None
+    url_picture: str | None = None
+
+    class Config:
+        from_attributes = True
+
 class AddFavouriteCar(BaseModel):
     car_id: int = Field()
 class FavouriteCarResponse(BaseModel):

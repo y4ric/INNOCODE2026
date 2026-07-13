@@ -4,18 +4,19 @@ import streamlit as st
 from api.client import get_error_message, get_car, update_car
 from auth.state import require_admin
 
+from views.create_car import full_description
 
 require_admin()
 st.header("Редактирование записи")
 
-item_id = st.session_state.get("edit_item_id")
+car_id = st.session_state.get("edit_car_id")
 
-if item_id is None:
+if car_id is None:
     st.info("Сначала выберите запись для редактирования.")
     st.stop()
 
 try:
-    item_response = get_car(item_id)
+    item_response = get_car(car_id)
 except requests.RequestException:
     st.error("Не удалось получить запись с backend.")
     st.stop()
@@ -26,42 +27,42 @@ if not item_response.ok:
 
 item = item_response.json()
 
-with st.form(f"edit_item_form_{item_id}"):
-    title = st.text_input("Название", value=item["title"])
+with st.form(f"edit_item_form_{car_id}"):
+    name = st.text_input("Название", value=item["title"])
     short_description = st.text_area(
         "Краткое описание",
         value=item.get("short_description", ""),
     )
-    description = st.text_area(
+    full_description = st.text_area(
         "Полное описание",
-        value=item.get("description", ""),
+        value=item.get("full_description", ""),
     )
-    image_url = st.text_input(
+    url_picture = st.text_input(
         "Ссылка на изображение",
-        value=item.get("image_url") or "",
+        value=item.get("url_picture") or "",
     )
     submitted = st.form_submit_button("Сохранить")
 
 if submitted:
-    if not title.strip():
+    if not name.strip():
         st.error("Укажите название.")
         st.stop()
 
     payload = {
-        "title": title.strip(),
+        "name": name.strip(),
         "short_description": short_description.strip(),
-        "description": description.strip(),
-        "image_url": image_url.strip() or None,
+        "full_description": full_description.strip(),
+        "url_picture": url_picture.strip() or None,
     }
 
     try:
-        response = update_car(item_id, payload)
+        response = update_car(car_id, payload)
     except requests.RequestException:
         st.error("Не удалось выполнить запрос к backend.")
         st.stop()
 
     if response.ok:
-        st.session_state["selected_item_id"] = item_id
+        st.session_state["selected_car_id"] = car_id
         st.switch_page("views/details.py")
     else:
         st.error(get_error_message(response))
