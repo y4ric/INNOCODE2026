@@ -1,11 +1,11 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from auth import create_access_token, verify_password
-from models.user import User
-from repositories.user_repository import UserRepository
-from schemas.token import Token
-from schemas.user import UserLogin
+from app.auth import create_access_token, verify_password
+from app.models.user import User
+from app.repositories.user_repository import UserRepository
+from app.schemas.token import Token
+from app.schemas.user import UserLogin
 
 
 class AuthService:

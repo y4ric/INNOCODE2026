@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from auth import hash_password
-from models.user import User, UserRole
-from repositories.user_repository import UserRepository
-from schemas.user import UserCreate
+from app.auth import hash_password
+from app.models.user import User, UserRole
+from app.repositories.user_repository import UserRepository
+from app.schemas.user import UserCreate
 
 
 class UserService:

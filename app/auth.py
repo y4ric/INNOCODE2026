@@ -7,11 +7,11 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-from config.config import get_settings
-from database import get_db
-from models.user import User, UserRole
-from repositories.user_repository import UserRepository
-from schemas.token import TokenData
+from app.config.config import get_settings
+from app.database import get_db
+from app.models.user import User, UserRole
+from app.repositories.user_repository import UserRepository
+from app.schemas.token import TokenData
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 bearer_scheme = HTTPBearer(auto_error=False)

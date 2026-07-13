@@ -1,18 +1,14 @@
-
 import uvicorn
 from fastapi import FastAPI
-import os
-import sys
-from pathlib import Path
 
+from app.config.config import get_settings
+from app.database import Base, engine
+from app.handlers.auth import router as auth_router
+from app.handlers.cars import router as cars_router
+from app.handlers.users import router as users_router
 
-from config.config import get_settings
-from database import Base, engine
-from handlers.auth import router as auth_router
-from handlers.books import router as books_router
-from handlers.users import router as users_router
+from app.handlers.favourite import router as favourite_router
 
-from handlers.favourite import router as favourite_router
 settings = get_settings()
 app = FastAPI(
     title=settings.app_name,
@@ -22,7 +18,7 @@ app = FastAPI(
 
 Base.metadata.create_all(bind=engine)
 app.include_router(auth_router)
-app.include_router(books_router)
+app.include_router(cars_router)
 app.include_router(users_router)
 app.include_router(favourite_router)
 

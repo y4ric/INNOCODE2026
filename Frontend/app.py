@@ -1,7 +1,7 @@
 import streamlit as st
-
+import sys
+from pathlib import Path
 from auth.state import is_admin
-
 
 st.set_page_config(
     page_title="Каталог",

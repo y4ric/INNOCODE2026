@@ -1,9 +1,6 @@
 from pydantic import BaseModel, ConfigDict, Field
 
 
-
-
-
 class BookUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     author: str | None = Field(default=None, min_length=1, max_length=200)

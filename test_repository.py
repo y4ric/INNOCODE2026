@@ -1,6 +1,6 @@
 from app.database import Base, SessionLocal, engine
-from app.models.book import Book
-from app.repositories.book_repository import BookRepository
+from app.models.car import Book
+from app.repositories.car_repository import BookRepository
 
 Base.metadata.create_all(bind=engine)
 

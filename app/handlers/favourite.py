@@ -1,11 +1,10 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-from database import get_db
-from schemas.book import  ProfileResponse, BookUpdate, CarCreate
-from services.book_service import BookService
-from schemas.book import CarCreate , AddFavouriteCar
-from services.favourite_service import FavouriteService
+from app.database import get_db
+
+from app.schemas.car import  AddFavouriteCar
+from app.services.favourite_service import FavouriteService
 
 
 router = APIRouter(

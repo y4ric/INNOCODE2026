@@ -1,19 +1,14 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 
-import sys
-from pathlib import Path
-
-frontend_root = str(Path(__file__).resolve().parent.parent)
-if frontend_root not in sys.path:
-    sys.path.append(frontend_root)
 
 
-from database import get_db
-from schemas.token import Token
-from schemas.user import UserCreate, UserLogin, UserResponse
-from services.auth_service import AuthService
-from services.user_service import UserService
+
+from app.database import get_db
+from app.schemas.token import Token
+from app.schemas.user import UserCreate, UserLogin, UserResponse
+from app.services.auth_service import AuthService
+from app.services.user_service import UserService
 
 router = APIRouter(
     prefix="/auth",
@@ -50,3 +45,4 @@ def login_user(
     service: AuthService = Depends(get_auth_service),
 ):
     return service.login(schema)
+

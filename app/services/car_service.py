@@ -1,0 +1,35 @@
+from fastapi import HTTPException, status
+from sqlalchemy.orm import Session
+
+from app.models.car import Cars
+from app.repositories.car_repository import CarRepository
+from app.schemas.car import CarCreate
+
+
+class CarService:
+    def __init__(self, db: Session):
+        self.repository = CarRepository(db)
+
+    def create_car(self, schema: CarCreate) -> Cars:
+        new_car = Cars(
+            name = schema.name,
+            short_description = schema.short_description,
+            full_description = schema.full_description,
+            url_picture = schema.url_picture,
+        )
+        return self.repository.create(new_car)
+
+    def get_cars(self) -> list[Cars]:
+        return self.repository.get_all()
+
+    def get_car(self, car_id: int) -> Cars:
+        car = self.repository.get_by_id(car_id)
+
+        if car is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Car not found",
+            )
+
+        return car
+
