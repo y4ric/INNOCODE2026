@@ -30,6 +30,10 @@ def render_favorite_button(item: dict, key_prefix: str) -> None:
             return
 
         if response.ok:
+            # Если мы только что ДОБАВИЛИ в избранное, запускаем шарики
+            if not is_favorite:
+                st.balloons()
+
             st.rerun()
         else:
             st.error(get_error_message(response))

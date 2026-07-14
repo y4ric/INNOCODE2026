@@ -86,16 +86,37 @@ def get_car(car_id: int) -> requests.Response:
 
 
 def get_favorites() -> requests.Response:
-    return request_with_authorization_header("GET", FAVORITES_ENDPOINT)
+    # Явно импортируем streamlit, если его нет вверху файла
+    import streamlit as st
+
+    # Пытаемся достать ID пользователя. Если там None, ставим заглушку 1
+    user_id = st.session_state.get("user_id") or 1
+
+    # Важно передать params именно третьим аргументом в вашу функцию:
+    return request_with_authorization_header(
+        "GET",
+        FAVORITES_ENDPOINT,
+        params={"user_id": user_id}
+    )
 
 
 def add_favorite(car_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}/{car_id}/"
-    return request_with_authorization_header("POST", endpoint)
+    endpoint = f"{FAVORITES_ENDPOINT}"
+
+    user_id = session_state.get("user_id", 1)
+
+    return request_with_authorization_header(
+        "POST",
+        endpoint,
+        payload={
+            "car_id": car_id,
+            "user_id": user_id
+        }
+    )
 
 
 def remove_favorite(car_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}/{car_id}/"
+    endpoint = f"{FAVORITES_ENDPOINT}/{car_id}"
     return request_with_authorization_header("DELETE", endpoint)
 
 

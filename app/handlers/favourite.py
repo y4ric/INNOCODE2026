@@ -8,8 +8,8 @@ from app.services.favourite_service import FavouriteService
 
 
 router = APIRouter(
-    prefix="/Favourite",
-    tags=["favourite"],
+    prefix="/favorites",
+    tags=["favorite"],
 )
 
 def favourite_service(
@@ -24,4 +24,12 @@ def add_favourite(
     schema: AddFavouriteCar,
     service: FavouriteService = Depends(favourite_service),
 ):
-    return service.add_favourite(schema)
+    return service.add_favourite(schema, user_id=schema.user_id)
+
+@router.get("/")
+def get_favorites(
+    user_id: int,  # 1. Говорим FastAPI, что ждём user_id от фронтенда
+    service: FavouriteService = Depends(favourite_service),
+):
+    # 2. ИСПРАВЛЕНО: передаем user_id в метод сервиса!
+    return service.get_favourites(user_id=user_id)

@@ -30,6 +30,8 @@ class CarResponse(BaseModel):
 
 class AddFavouriteCar(BaseModel):
     car_id: int = Field()
+    user_id: int = Field()
 class FavouriteCarResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     car_id: int
+    user_id: int
