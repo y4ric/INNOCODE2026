@@ -33,3 +33,12 @@ def get_favorites(
 ):
     # 2. ИСПРАВЛЕНО: передаем user_id в метод сервиса!
     return service.get_favourites(user_id=user_id)
+
+@router.delete("/")
+def remove_favourite(
+    car_id: int,
+    user_id: int,
+    service: FavouriteService = Depends(favourite_service),
+):
+    return service.remove_favourite(car_id=car_id, user_id=user_id)
+

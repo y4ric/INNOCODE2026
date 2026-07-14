@@ -32,3 +32,21 @@ class FavouriteService:
         ).filter(Favorites.user_id == user_id).all()
 
         return records
+
+    def remove_favourite(self, car_id: int, user_id: int):
+        from app.models.car import Favorites  # Проверьте имя вашей модели избранного
+
+        # 1. Ищем запись, где совпадают и машина, и пользователь
+        record = self.repository.query(Favorites).filter(
+            Favorites.car_id == car_id,
+            Favorites.user_id == user_id
+        ).first()
+
+        # 2. Если нашли — удаляем её из базы данных
+        if record:
+            self.repository.delete(record)
+            self.repository.commit()
+            return {"status": "success", "message": "Успешно удалено из избранного"}
+
+        return {"status": "error", "message": "Запись не найдена"}
+
