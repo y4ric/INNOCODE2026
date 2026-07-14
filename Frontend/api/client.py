@@ -78,7 +78,7 @@ def get_cars() -> requests.Response:
 
 
 def get_car(car_id: int) -> requests.Response:
-    endpoint = f"{CARS_ENDPOINT}{car_id}"
+    endpoint = f"{CARS_ENDPOINT}/{car_id}"
 
     if session_state.get("access_token"):
         return request_with_authorization_header("GET", endpoint)
@@ -90,12 +90,12 @@ def get_favorites() -> requests.Response:
 
 
 def add_favorite(car_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}{car_id}/"
+    endpoint = f"{FAVORITES_ENDPOINT}/{car_id}/"
     return request_with_authorization_header("POST", endpoint)
 
 
 def remove_favorite(car_id: int) -> requests.Response:
-    endpoint = f"{FAVORITES_ENDPOINT}{car_id}/"
+    endpoint = f"{FAVORITES_ENDPOINT}/{car_id}/"
     return request_with_authorization_header("DELETE", endpoint)
 
 
