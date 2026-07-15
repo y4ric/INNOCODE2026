@@ -9,6 +9,7 @@ from components.item_card import render_item_cards
 
 st.header("Каталог")
 
+
 if is_admin():
     if st.button("Создать запись"):
         st.switch_page("views/create_car.py")
