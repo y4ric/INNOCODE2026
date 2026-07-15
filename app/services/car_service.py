@@ -33,3 +33,20 @@ class CarService:
 
         return car
 
+    def update_car(self, car_id: int, schema):
+        car = self.repository.get_by_id(car_id)
+        if not car:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404, detail="Машина не найдена")
+
+        # Обновляем поля модели новыми значениями из схемы фронтенда
+        car.name = schema.name
+        car.short_description = schema.short_description
+        car.full_description = schema.full_description
+        car.url_picture = schema.url_picture
+
+        # Сохраняем изменения в базу данных
+        self.repository.db.commit()
+        return {"status": "success", "message": "Данные автомобиля успешно обновлены"}
+
+

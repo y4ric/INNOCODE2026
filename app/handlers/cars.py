@@ -27,6 +27,15 @@ def create_car(
 ):
     return service.create_car(schema)
 
+@router.get(
+    "/{car_id}",
+    response_model=CarResponse,
+)
+def get_car(
+    car_id: int,
+    service: CarService = Depends(get_car_service),
+):
+    return service.get_car(car_id)
 
 @router.get(
     "/",
@@ -36,3 +45,10 @@ def get_cars(
     service: CarService = Depends(get_car_service),
 ):
     return service.get_cars()
+@router.put("/{car_id}")
+def update_car(
+    car_id: int,
+    schema: CarCreate,  # или ваша специальная схема для обновления, например CarUpdate
+    service: CarService = Depends(get_car_service),
+):
+    return service.update_car(car_id, schema)

@@ -30,6 +30,6 @@ if item.get("url_picture"):
     st.image(item["url_picture"] , width=500)
 
 
-st.write(item.get("description", ""))
+st.write(item.get("full_description", ""))
 render_favorite_button(item, key_prefix="details")
 render_admin_actions(item["car_id"], key_prefix="details")

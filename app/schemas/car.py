@@ -16,8 +16,8 @@ class ProfileResponse(BaseModel):
 class CarCreate(BaseModel):
     name: str = Field(default=None, min_length=1, max_length=200)
     short_description: str = Field(default=None, min_length=1, max_length=200)
-    full_description: str = Field(default=None, min_length=1, max_length=200)
-    url_picture: str = Field(default=None, min_length=1, max_length=200)
+    full_description: str = Field(default=None, min_length=1, max_length=1000)
+    url_picture: str = Field(default=None, min_length=1, max_length=1000)
 class CarResponse(BaseModel):
     car_id: int
     name: str

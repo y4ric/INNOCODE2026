@@ -26,9 +26,10 @@ if not item_response.ok:
     st.stop()
 
 item = item_response.json()
+st.toast('Данные успешно загружены!', icon='🎉')  # Всплывающее уведомление в углу
 
 with st.form(f"edit_item_form_{car_id}"):
-    name = st.text_input("Название", value=item["title"])
+    name = st.text_input("Название", value=item["name"])
     short_description = st.text_area(
         "Краткое описание",
         value=item.get("short_description", ""),

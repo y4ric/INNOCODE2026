@@ -8,8 +8,9 @@ BACKEND_URL = "http://127.0.0.1:8000"
 LOGIN_ENDPOINT = f"{BACKEND_URL}/auth/login/"
 REGISTER_ENDPOINT = f"{BACKEND_URL}/auth/register/"
 PROFILE_ENDPOINT = f"{BACKEND_URL}/users/me/"
-CARS_ENDPOINT = f"{BACKEND_URL}/cars/"
-FAVORITES_ENDPOINT = f"{BACKEND_URL}/favorites/"
+CARS_ENDPOINT = f"{BACKEND_URL}/cars"
+FAVORITES_ENDPOINT = f"{BACKEND_URL}/favorites"
+
 
 
 def register(email: str, password: str, full_name: str) -> requests.Response:
@@ -43,6 +44,8 @@ def request_with_authorization_header(
         response = requests.get(endpoint, headers=headers, params=params)
     elif request_type == "POST":
         response = requests.post(endpoint, headers=headers, params=params, json=payload)
+    elif request_type == "PUT":
+        response = requests.put(endpoint, headers=headers, params=params, json=payload)
     elif request_type == "PATCH":
         response = requests.patch(endpoint, headers=headers, params=params, json=payload)
     elif request_type == "DELETE":
@@ -78,6 +81,7 @@ def get_cars() -> requests.Response:
 
 
 def get_car(car_id: int) -> requests.Response:
+
     endpoint = f"{CARS_ENDPOINT}/{car_id}"
 
     if session_state.get("access_token"):
@@ -134,9 +138,9 @@ def create_car(payload: dict) -> requests.Response:
 
 
 def update_car(car_id: int, payload: dict) -> requests.Response:
-    endpoint = f"{CARS_ENDPOINT}{car_id}/"
+    endpoint = f"{CARS_ENDPOINT}/{car_id}"
     return request_with_authorization_header(
-        "PATCH",
+        "PUT",
         endpoint,
         payload=payload,
     )
