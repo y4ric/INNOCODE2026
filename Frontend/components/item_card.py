@@ -75,6 +75,7 @@ def render_admin_actions(car_id: int, key_prefix: str) -> None:
 
 
 # 1. ИСПРАВЛЕНО: добавили аргумент key_prefix со значением по умолчанию "card"
+# 1. ИСПРАВЛЕНО: добавили аргумент key_prefix со значением по умолчанию "card"
 def render_item_cards(item: dict, key_prefix: str = "card") -> None:
     car_id = item["car_id"]
 
@@ -102,6 +103,8 @@ def render_item_cards(item: dict, key_prefix: str = "card") -> None:
             f"<div style='height: 75px; overflow: hidden; font-size:0.95rem; color:#31333F; line-height:1.4;'>{desc_text}</div>",
             unsafe_allow_html=True
         )
+
+ 
 
         # 2. ИСПРАВЛЕНО: передаем переменную key_prefix вместо "card"
         render_favorite_button(item, key_prefix=key_prefix)
