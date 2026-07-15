@@ -88,8 +88,20 @@ def render_item_cards(item: dict, key_prefix: str = "card") -> None:
         else:
             st.info("Изображение не добавлено")
 
-        st.subheader(item["name"])
-        st.write(item.get("short_description", ""))
+        # --- ЧИСТЫЙ PYTHON + ФИКСИРОВАННЫЕ КОНТЕЙНЕРЫ ---
+
+        # 1. Фиксированная высота для заголовка (ровно 60 пикселей, под 2 строки)
+        st.markdown(
+            f"<div style='height: 60px; overflow: hidden;'><h3 style='margin:0; padding:0; font-size:1.3rem; font-weight:600;'>{item['name']}</h3></div>",
+            unsafe_allow_html=True
+        )
+
+        # 2. Фиксированная высота для краткого описания (ровно 75 пикселей, под 3 строки)
+        desc_text = item.get("short_description", "")
+        st.markdown(
+            f"<div style='height: 75px; overflow: hidden; font-size:0.95rem; color:#31333F; line-height:1.4;'>{desc_text}</div>",
+            unsafe_allow_html=True
+        )
 
         # 2. ИСПРАВЛЕНО: передаем переменную key_prefix вместо "card"
         render_favorite_button(item, key_prefix=key_prefix)
