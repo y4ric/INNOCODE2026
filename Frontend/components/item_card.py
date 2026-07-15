@@ -16,7 +16,10 @@ def render_favorite_button(item: dict, key_prefix: str) -> None:
         return
 
     car_id = item["car_id"]
-    is_favorite = item.get("is_favorite", False)
+
+    # Жестко проверяем: если префикс равен "favorite",
+    # значит, карточка принудительно отрисовывается на странице Избранного!
+    is_favorite = item.get("is_favorite", False) or key_prefix == "favorite"
     button_text = "Убрать из избранного" if is_favorite else "В избранное"
 
     if st.button(button_text, key=f"{key_prefix}_favorite_{car_id}"):
@@ -30,10 +33,11 @@ def render_favorite_button(item: dict, key_prefix: str) -> None:
             return
 
         if response.ok:
-            # Если мы только что ДОБАВИЛИ в избранное, запускаем шарики
-            if not is_favorite:
+            # Шарики полетят, только если мы нажимали кнопку добавления
+            if button_text == "В избранное":
                 st.balloons()
-
+                import time
+                time.sleep(1.5)
             st.rerun()
         else:
             st.error(get_error_message(response))
@@ -70,7 +74,8 @@ def render_admin_actions(car_id: int, key_prefix: str) -> None:
             st.error(get_error_message(response))
 
 
-def render_item_cards(item: dict) -> None:
+# 1. ИСПРАВЛЕНО: добавили аргумент key_prefix со значением по умолчанию "card"
+def render_item_cards(item: dict, key_prefix: str = "card") -> None:
     car_id = item["car_id"]
 
     with st.container(border=True):
@@ -86,10 +91,12 @@ def render_item_cards(item: dict) -> None:
         st.subheader(item["name"])
         st.write(item.get("short_description", ""))
 
-        render_favorite_button(item, key_prefix="card")
+        # 2. ИСПРАВЛЕНО: передаем переменную key_prefix вместо "card"
+        render_favorite_button(item, key_prefix=key_prefix)
 
         if st.button("Подробнее", key=f"card_details_{car_id}"):
             st.session_state["selected_car_id"] = car_id
             st.switch_page("views/details.py")
 
-        render_admin_actions(car_id, key_prefix="card")
+        # 3. ИСПРАВЛЕНО: передаем переменную key_prefix вместо "card"
+        render_admin_actions(car_id, key_prefix=key_prefix)

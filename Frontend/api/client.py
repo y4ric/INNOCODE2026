@@ -120,7 +120,7 @@ def remove_favorite(car_id: int) -> requests.Response:
     user_id = st.session_state.get("user_id") or 1
 
     # Склеиваем адрес со знаком вопроса и параметрами: /favorites/?car_id=...&user_id=...
-    endpoint = f"{FAVORITES_ENDPOINT}/?car_id={car_id}&user_id={user_id}"
+    endpoint = f"{FAVORITES_ENDPOINT}?car_id={car_id}&user_id={user_id}"
 
     return request_with_authorization_header("DELETE", endpoint)
 

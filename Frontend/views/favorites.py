@@ -21,5 +21,7 @@ if not response.ok:
 
 items = response.json()     
 
+# Замените последние строки на этот вариант:
 for item in items:
-    render_item_cards(item)
+    render_item_cards(item, key_prefix="favorite")
+  
