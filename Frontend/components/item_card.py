@@ -89,7 +89,20 @@ def render_item_cards(item: dict, key_prefix: str = "card") -> None:
         else:
             st.info("Изображение не добавлено")
 
-        # --- ЧИСТЫЙ PYTHON + ФИКСИРОВАННЫЕ КОНТЕЙНЕРЫ ---
+        # === ВСТАВЛЯЕМ СЧЁТЧИКИ ПРОСМОТРОВ И ЛАЙКОВ В КАТАЛОГ ===
+        views = item.get("views_count", 0)
+        favs = item.get("favorites_count", 0)
+
+        st.markdown(
+            f"""
+            <div style="display: flex; gap: 15px; margin-top: 5px; margin-bottom: 5px; font-size: 0.9rem; opacity: 0.8;">
+                <span>👁️ {views} просмотров</span>
+                <span>❤️ {favs} в избранном</span>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        # =======================================================
 
         # 1. Фиксированная высота для заголовка (ровно 60 пикселей, под 2 строки)
         st.markdown(

@@ -18,6 +18,11 @@ class Cars(Base):
     url_picture: Mapped[str] = mapped_column(String, nullable=False)
 
 
+    views_count: Mapped[int] = mapped_column(default=0, nullable=False)
+    favorites_count: Mapped[int] = mapped_column(default=0, nullable=False)
+
+
+
 class Favorites(Base):
     __tablename__ = "favorites"
 

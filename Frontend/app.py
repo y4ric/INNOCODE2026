@@ -4,15 +4,43 @@ from pathlib import Path
 from auth.state import is_admin
 
 st.set_page_config(
-    page_title="Каталог",
-    page_icon="📚",
+    page_title="CarLibrary",
+    page_icon="🏎️",
     layout="wide",
 )
 
-# === КОД ДЛЯ ТУМБЛЕРА ТЕМЫ ===
+# === КОД ДЛЯ ТУМБЛЕРА ТЕМЫ И КНОПКИ "МНЕ ПОВЕЗЁТ!" ===
 with st.sidebar:
+    st.write("### 🛠 Настройки сайта")
+    # Переключатель темы (с уникальным key)
+    dark_mode = st.toggle("🌙 Темная тема сайта", key="main_theme_toggle")
+
     st.write("---")  # Визуальная линия-разделитель в меню
-    dark_mode = st.toggle("🌙 Темная тема сайта")
+
+    # Кнопка "Мне повезёт!" (с уникальным key)
+    if st.button("🎲 Мне повезёт!", use_container_width=True, key="sidebar_lucky_btn"):
+        try:
+            import random
+            from api.client import get_cars
+
+            response = get_cars()
+            if response.ok:
+                all_cars = response.json()
+                if all_cars:
+                    # Выбираем случайную машину из списка
+                    random_car = random.choice(all_cars)
+
+                    # Записываем её ID в сессию
+                    st.session_state["selected_car_id"] = random_car["car_id"]
+
+                    # Мгновенно переключаем пользователя на страницу "Подробнее"
+                    st.switch_page("views/details.py")
+                else:
+                    st.sidebar.error("В базе пока нет машин.")
+            else:
+                st.sidebar.error("Ошибка при получении машин.")
+        except Exception:
+            st.sidebar.error("Бэкенд недоступен.")
 
 # Определяем цвета в зависимости от положения тумблера
 if dark_mode:
@@ -83,7 +111,7 @@ st.markdown(f"""
 
     /* Эффект при наведении на кнопку для красоты */
     div[data-testid="stColumn"] button:hover {{
-        background-color: #ff4b4b !important; /* Кнопка будет подсвечиваться фирменным красным Streamlit */
+        background-color: #ff4b4b !important;
         color: #ffffff !important;
         border-color: #ff4b4b !important;
     }}
@@ -120,6 +148,13 @@ views = {
             title="Профиль",
             icon=":material/person:",
             url_path="profile",
+        ),
+        # === ДОБАВИЛ СЮДА ДЛЯ ОБЫЧНЫХ ПОЛЬЗОВАТЕЛЕЙ (ИГРА ДОЛЖНА БЫТЬ ДОСТУПНА ВСЕМ) ===
+        st.Page(
+            "views/quiz.py",
+            title="Мини-игра: Угадай авто",
+            icon=":material/sports_esports:",
+            url_path="quiz",
         ),
     ],
     "Авторизация": [

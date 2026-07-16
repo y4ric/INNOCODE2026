@@ -30,7 +30,10 @@ class CarService:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Car not found",
             )
+        car.views_count += 1
 
+        # Делаем коммит. Если в твоем сервисе сессия называется self.db:
+        self.repository.db.commit()
         return car
 
     def update_car(self, car_id: int, schema):

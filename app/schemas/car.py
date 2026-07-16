@@ -13,11 +13,14 @@ class ProfileResponse(BaseModel):
     name: str
     profile_pic: str
 
+
 class CarCreate(BaseModel):
     name: str = Field(default=None, min_length=1, max_length=200)
     short_description: str = Field(default=None, min_length=1, max_length=200)
     full_description: str = Field(default=None, min_length=1, max_length=1000)
     url_picture: str = Field(default=None, min_length=1, max_length=1000)
+
+
 class CarResponse(BaseModel):
     car_id: int
     name: str
@@ -25,12 +28,19 @@ class CarResponse(BaseModel):
     full_description: str | None = None
     url_picture: str | None = None
 
+    # === ДОБАВИЛИ ОБЯЗАТЕЛЬНЫЕ ПОЛЯ ДЛЯ СТАТИСТИКИ ===
+    views_count: int
+    favorites_count: int
+
     class Config:
         from_attributes = True
+
 
 class AddFavouriteCar(BaseModel):
     car_id: int = Field()
     user_id: int = Field()
+
+
 class FavouriteCarResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     car_id: int

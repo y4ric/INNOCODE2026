@@ -1,6 +1,6 @@
 from app.models.car import Favorites
 
-
+from app.models.car import Cars
 class FavouriteService:
 
     def __init__(self, repository):
@@ -11,6 +11,7 @@ class FavouriteService:
 
     def add_favourite(self, schema, user_id):
         # Создаем запись для таблицы избранного, а не саму машину!
+
         favourite_record = Favorites(  # <-- Используйте вашу модель избранного
             car_id=schema.car_id,
             user_id=user_id
@@ -18,6 +19,10 @@ class FavouriteService:
 
         self.repository.add(favourite_record)
         self.repository.commit()
+        car = self.repository.query(Cars).filter(Cars.car_id == schema.car_id).first()
+        if car:
+            car.favorites_count += 1
+            self.repository.commit()
 
         return {"status": "success", "message": "Машина успешно добавлена в избранное"}
 
@@ -34,7 +39,7 @@ class FavouriteService:
         return records
 
     def remove_favourite(self, car_id: int, user_id: int):
-        from app.models.car import Favorites  # Проверьте имя вашей модели избранного
+ # Проверьте имя вашей модели избранного
 
         # 1. Ищем запись, где совпадают и машина, и пользователь
         record = self.repository.query(Favorites).filter(
@@ -46,6 +51,12 @@ class FavouriteService:
         if record:
             self.repository.delete(record)
             self.repository.commit()
+            # Если в аргументах написано просто car_id:
+            car = self.repository.query(Cars).filter(Cars.car_id == car_id).first()
+            if car and car.favorites_count > 0:
+                car.favorites_count -= 1
+                self.repository.commit()
+
             return {"status": "success", "message": "Успешно удалено из избранного"}
 
         return {"status": "error", "message": "Запись не найдена"}
