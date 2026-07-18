@@ -27,8 +27,6 @@ class CarResponse(BaseModel):
     short_description: str | None = None
     full_description: str | None = None
     url_picture: str | None = None
-
-    # === ДОБАВИЛИ ОБЯЗАТЕЛЬНЫЕ ПОЛЯ ДЛЯ СТАТИСТИКИ ===
     views_count: int
     favorites_count: int
 
